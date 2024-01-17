@@ -1,15 +1,6 @@
 #!/bin/bash
 
-# ls -la /etc/mysql
-# echo "config files are above"
-ls -la /etc/mysql/mariadb.conf.d
-# cat /etc/mysql/my.cnf
-# echo "finished the file"
-# cat /etc/mysql/mariadb.conf.d/50-server.cnf
 # chmod -R 770 /var/lib/mysql
-# ls -la /var/lib/mysql
-#mariadbd
-#service mariadb restart
 
 # Set MariaDB credentials
 # DB_USER="${MYSQL_USER}"
@@ -19,8 +10,6 @@ ls -la /etc/mysql/mariadb.conf.d
 
 service mariadb start
 
-#sleep 10
-
 mariadb -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;\
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';\
 GRANT ALL PRIVILEGES ON '${MYSQL_DATABASE}'.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';\
@@ -28,20 +17,17 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';\
 FLUSH PRIVILEGES;\
 SHOW DATABASES;"
 
-# mariadb << EOF
-# CREATE DATABASE IF NOT EXISTS test;
-# FLUSH PRIVILEGES;
-# SHOW DATABASES;
-# EOF
+#sleep 5
 
-sleep 5
+#mariadb-admin -u root -p$SQL_ROOT_PASSWORD shutdown
 
-mariadb-admin -u root -p$SQL_ROOT_PASSWORD shutdown
+service mariadb stop
 
-echo "hi"
-
-#exec mysqld_safe
 exec mariadbd-safe
+
+
+
+
 
 
 
