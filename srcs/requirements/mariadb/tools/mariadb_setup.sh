@@ -19,14 +19,14 @@ ls -la /etc/mysql/mariadb.conf.d
 
 service mariadb start
 
-mariadb << EOF
-CREATE DATABASE IF NOT EXISTS '${MYSQL_DATABASE}';
-CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';
-GRANT ALL PRIVILEGES ON '${MYSQL_DATABASE}'.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
-FLUSH PRIVILEGES;
-SHOW DATABASES;
-EOF
+#sleep 10
+
+mariadb -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;\
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';\
+GRANT ALL PRIVILEGES ON '${MYSQL_DATABASE}'.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';\
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';\
+FLUSH PRIVILEGES;\
+SHOW DATABASES;"
 
 # mariadb << EOF
 # CREATE DATABASE IF NOT EXISTS test;
@@ -34,7 +34,7 @@ EOF
 # SHOW DATABASES;
 # EOF
 
-#kill $(cat /var/run/mysqld/mysqld.pid)
+sleep 5
 
 mariadb-admin -u root -p$SQL_ROOT_PASSWORD shutdown
 
@@ -42,3 +42,6 @@ echo "hi"
 
 #exec mysqld_safe
 exec mariadbd-safe
+
+
+
