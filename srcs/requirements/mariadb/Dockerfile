@@ -6,17 +6,19 @@ RUN apt-get -y update && \
 
 RUN mkdir -p /run/mysqld && \
 	chown -R mysql:mysql /run/mysqld
-
 #	mkdir -p /var/lib/mysql && \
 #	chown -R mysql:mysql /var/lib/mysql
 
-# RUN mariadb-install-db
 
-#ENV MYSQL_DATABASE=syntx
+ENV MYSQL_DATABASE=syntx \
+	MYSQL_USER=sydb \
+	MYSQL_PASSWORD=7890 \
+	MYSQL_ROOT_PASSWORD=0987
 
-COPY ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/mariadb.cnf
 COPY ./tools/mariadb_setup.sh .
-
 RUN chmod +x /mariadb_setup.sh
+
+RUN mariadb-install-db
 # EXPOSE 3306
 CMD ["./mariadb_setup.sh"]
