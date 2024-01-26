@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM debian:bullseye
 
 RUN apt-get -y update && \
@@ -16,9 +17,12 @@ ENV MYSQL_DATABASE=syntx \
 	MYSQL_ROOT_PASSWORD=0987
 
 COPY ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/mariadb.cnf
-COPY ./tools/mariadb_setup.sh .
+COPY ./tools/mariadb_setup.sh /
 RUN chmod +x /mariadb_setup.sh
 
 RUN mariadb-install-db
-# EXPOSE 3306
-CMD ["./mariadb_setup.sh"]
+
+#for documenation reason
+EXPOSE 3306
+
+ENTRYPOINT ["./mariadb_setup.sh"]
