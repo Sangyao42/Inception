@@ -21,6 +21,7 @@ COPY ./tools/mariadb_setup.sh /
 RUN chmod +x /mariadb_setup.sh
 
 RUN mariadb-install-db
+#RUN mysql_secure_installation
 
 #for documenation reason
 EXPOSE 3306
