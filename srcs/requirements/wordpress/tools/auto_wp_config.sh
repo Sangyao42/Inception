@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #wait until mariabd starts
 sleep 10
 
@@ -11,7 +13,6 @@ else
 		--dbuser=$MYSQL_USER \
 		--dbpass=$MYSQL_PASSWORD \
 		--dbhost=mariadb:3306 \
-		#--dbhost=localhost:3306 \
 		--path='/var/www/wordpress'
 fi
 
