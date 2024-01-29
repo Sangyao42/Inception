@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 FROM debian:bullseye
 
+ARG CERTS
+
 RUN apt-get -y update && \
 	apt-get -y upgrade && \
 	apt-get -y install nginx && \
@@ -18,7 +20,7 @@ RUN mkdir -p /etc/nginx/ssl
 #req command creates and processes the certificate requests
 #-x509 is self-signed certificate
 RUN echo hi
-RUN openssl req -new -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=DE/ST=BW/L=Heilbronn/O=42/OU=42/CN=sawang.42.fr/UID=sawang"
+RUN openssl req -new -x509 -nodes -out $CERTS -keyout /etc/nginx/ssl/inception.key -subj "/C=DE/ST=BW/L=Heilbronn/O=42/OU=42/CN=sawang.42.fr/UID=sawang"
 #RUN chmod 644 /etc/nginx/ssl/inception*
 
 #for nginx to store runtime information
