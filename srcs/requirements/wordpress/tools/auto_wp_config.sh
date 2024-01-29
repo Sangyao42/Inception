@@ -10,8 +10,8 @@ else
 		--dbname=$MYSQL_DATABASE \
 		--dbuser=$MYSQL_USER \
 		--dbpass=$MYSQL_PASSWORD \
-		#--dbhost=mariadb:3306 \
-		--dbhost=localhost:3306
+		--dbhost=mariadb:3306 \
+		#--dbhost=localhost:3306 \
 		--path='/var/www/wordpress'
 fi
 
