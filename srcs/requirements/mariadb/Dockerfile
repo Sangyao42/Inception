@@ -10,12 +10,6 @@ RUN mkdir -p /run/mysqld && \
 #	mkdir -p /var/lib/mysql && \
 #	chown -R mysql:mysql /var/lib/mysql
 
-
-ENV MYSQL_DATABASE=syntx \
-	MYSQL_USER=sydb \
-	MYSQL_PASSWORD=7890 \
-	MYSQL_ROOT_PASSWORD=0987
-
 COPY ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/mariadb.cnf
 COPY ./tools/mariadb_setup.sh /
 RUN chmod +x /mariadb_setup.sh

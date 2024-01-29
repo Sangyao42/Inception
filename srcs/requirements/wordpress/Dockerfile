@@ -26,11 +26,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
-#for testing
-ENV MYSQL_DATABASE=syntx \
-	MYSQL_USER=sydb \
-	MYSQL_PASSWORD=7890 \
-	MYSQL_ROOT_PASSWORD=0987
 
 COPY ./tools/auto_wp_config.sh /
 RUN chmod +x /auto_wp_config.sh
