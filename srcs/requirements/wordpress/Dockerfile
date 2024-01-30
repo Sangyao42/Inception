@@ -11,12 +11,12 @@ RUN apt -y install lsb-release apt-transport-https ca-certificates && \
 	wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get install -y php8.2 php8.2-fpm php8.2-mysql
+RUN apt-get install -y php8.2 php8.2-fpm php8.2-mysql php8.2-phar
 
 #install wordpress
-RUN wget https://wordpress.org/latest.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf latest.tar.gz && rm latest.tar.gz
-RUN chown -R root:root /var/www/wordpress
+#RUN wget https://wordpress.org/latest.tar.gz -P /var/www
+#RUN cd /var/www && tar -xzf latest.tar.gz && rm latest.tar.gz
+#RUN chown -R root:root /var/www/wordpress
 
 #configure php
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
@@ -25,7 +25,7 @@ COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
-
+RUN mv /usr/local/bin/wp /usr/local/bin/wp-cli.phar
 
 COPY ./tools/auto_wp_config.sh /
 RUN chmod +x /auto_wp_config.sh
