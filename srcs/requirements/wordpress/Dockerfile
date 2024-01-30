@@ -25,6 +25,9 @@ COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
+#reference, why rename wp again?
+#https://github.com/wp-cli/config-command/issues/141
+#https://github.com/wp-cli/config-command/issues/31
 RUN mv /usr/local/bin/wp /usr/local/bin/wp-cli.phar
 
 COPY ./tools/auto_wp_config.sh /
