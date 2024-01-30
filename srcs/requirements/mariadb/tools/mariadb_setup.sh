@@ -2,15 +2,9 @@
 
 # chmod -R 770 /var/lib/mysql
 
-# Set MariaDB credentials
-# DB_USER="${MYSQL_USER}"
-# DB_PASSWORD="${MYSQL_PASSWORD}"
-# DB_NAME="${MYSQL_DATABASE}"
-# DB_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD}"
-
 service mariadb start
 
-sleep 10
+#sleep 10
 
 mariadb -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;\
 CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';\

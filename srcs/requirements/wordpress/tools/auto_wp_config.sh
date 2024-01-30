@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #wait until mariabd starts
-sleep 10
+#sleep 10
 
 wp-cli.phar core download --allow-root --path='/var/www/wordpress'
 
