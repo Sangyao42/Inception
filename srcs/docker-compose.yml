@@ -35,10 +35,12 @@ services:
     build:
       context: ./requirements/nginx/.
       args:
-        CERTS: ${CERTS_}
+        CERTS: ${CERTSN}
     image: nginx:sy
     depends_on:
       - wordpress
+    volumes:
+      - wordpress:/var/www/html
     env_file: .env
     networks:
       - inception
