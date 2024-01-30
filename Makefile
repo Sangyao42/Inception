@@ -9,14 +9,18 @@ up :
 	mkdir -p ~/data/mariadb;
 	$(COMPOSE) -f $(COMPOSE_FILE) up -d --build
 
-#Stop services
-#stop :
-#	$(COMPOSE) -f $(COMPOSE_FILE) stop
+#Stop and remove containers, networks by default
+down :
+	$(COMPOSE) -f $(COMPOSE_FILE) down
+	
+#start services
+start :
+	$(COMPOSE) -f $(COMPOSE_FILE) start
 
-#list containers
-status :
-	$(COMPOSE) -f $(COMPOSE_FILE) ps
+stop :
+	$(COMPOSE) -f $(COMPOSE_FILE) stop
 
+#stop services; delete containers; delete images; delete volumes; delete networks
 clean :
 	docker stop $$(docker ps -qa); docker rm $$(docker ps -qa);
 	docker rmi -f $$(docker images -qa);
@@ -24,15 +28,12 @@ clean :
 	docker network rm $$(docker network ls -qf "name=inception") 2>/dev/null
 
 fclean : clean
-	sudo rm -rf ~/data 2>delete.log
+	sudo rm -rf ~/data
 
 sclean :
 	docker system prune
 
-#Stop and remove containers, networks
-down :
-	$(COMPOSE) -f $(COMPOSE_FILE) down
+#list containers
+status :
+	$(COMPOSE) -f $(COMPOSE_FILE) ps
 
-#start services
-start :
-	$(COMPOSE) -f $(COMPOSE_FILE) start
