@@ -5,6 +5,7 @@ ARG CERTS
 
 RUN apt-get -y update && \
 	apt-get -y upgrade && \
+	apt-get -y install gettext-base && \
 	apt-get -y install nginx && \
 	apt-get -y install openssl
 
@@ -25,15 +26,17 @@ RUN openssl req -new -x509 -nodes -out ${CERTS} -keyout /etc/nginx/ssl/inception
 #for nginx to store runtime information
 RUN mkdir -p /var/run/nginx
 
-COPY ./conf/nginx.conf /etc/nginx/sites-available/mynginx.conf
-COPY ./tools/nginx_setup.sh /
-
-RUN chmod +x /nginx_setup.sh
-RUN ./nginx_setup.sh
-
+#modify the permissions
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
+COPY ./conf/nginx.conf /etc/nginx/sites-available/mynginx.conf
+
+COPY ./tools/nginx_setup.sh /
+RUN chmod +x /nginx_setup.sh
+#RUN ./nginx_setup.sh
+
 EXPOSE 443
 #runnning nginx
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+#ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["./nginx_setup.sh"]
