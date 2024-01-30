@@ -4,7 +4,7 @@
 sudo groupadd docker
 
 #Add your user to the docker group.
-sudo usermod -aG docker sangyao
+sudo usermod -aG docker sawang
 
 #restart the VM
 
