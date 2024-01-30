@@ -27,8 +27,11 @@ RUN openssl req -new -x509 -nodes -out ${CERTS} -keyout /etc/nginx/ssl/inception
 RUN mkdir -p /var/run/nginx
 
 #modify the permissions
-RUN chmod 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+#reference to make nginx work with php-fpm
+#https://stackoverflow.com/questions/29905953/how-to-correctly-link-php-fpm-and-nginx-docker-containers
+RUN mkdir -p /var/www/wordpress
+RUN chmod 755 /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/wordpress
 
 COPY ./conf/nginx.conf /etc/nginx/sites-available/mynginx.conf
 
@@ -37,6 +40,6 @@ RUN chmod +x /nginx_setup.sh
 #RUN ./nginx_setup.sh
 
 EXPOSE 443
-#runnning nginx
+
 #ENTRYPOINT ["nginx", "-g", "daemon off;"]
 ENTRYPOINT ["./nginx_setup.sh"]

@@ -40,7 +40,7 @@ services:
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/var/www/wordpress
     env_file: .env
     networks:
       - inception
@@ -66,7 +66,3 @@ networks:
   inception:
     name: inception
     driver: bridge
-
-
-
-
